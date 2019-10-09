@@ -5,12 +5,15 @@
   "main": "dist/index.js",
   "scripts": {
     "test": "mocha",
-    "build": "tsc"
+    "build": "tsc && gulp minify"
   },
   "author": "Kwang-in(Dennis) Jung",
   "license": "MIT",
   "devDependencies": {
+    "gulp": "^4.0.2",
+    "gulp-uglify": "^3.0.2",
     "mocha": "^6.2.1",
+    "readable-stream": "^3.4.0",
     "tslint": "^5.20.0",
     "typescript": "^3.6.3"
   }
