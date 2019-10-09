@@ -1,11 +1,15 @@
 {
   "name": "cachemyr",
   "version": "0.0.1",
-  "description": "",
-  "main": "index.js",
+  "description": "--TODO--",
+  "main": "dist/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc"
   },
   "author": "",
-  "license": "ISC"
+  "license": "MIT",
+  "devDependencies": {
+    "tslint": "^5.20.0",
+    "typescript": "^3.6.3"
+  }
 }
