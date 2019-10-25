@@ -1,10 +1,10 @@
 
 export interface CacheConfig {
   debugMode?: boolean
-  limit?: number
+  commonExpiry?: number
 }
 
 export const defaultConfig: CacheConfig = {
   debugMode: false,
-  limit: 600000
+  commonExpiry: 1000
 }
