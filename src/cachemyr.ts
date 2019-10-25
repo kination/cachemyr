@@ -16,25 +16,26 @@ export function configure(cfg: CacheConfig) {
   config = cfg
 }
 
-export function put(key: string, value: any, duration: number = 6000): void {
+export function put(key: string, value: any, duration?: number): void {
+  const exp = duration ? duration : config.commonExpiry
   cacheStore[key] = {
     value,
-    expire: duration + Date.now()
+    expire: exp + Date.now()
   }
 }
 
 export function get(key: string): any {
-  if (!cacheStore[key]) {
+  if (!cacheStore[key] || deleteExpired(key)) {
     return ''
   }
   
   return cacheStore[key].value
 }
 
-function deleteExpired(obj: CacheObject, key: string): boolean {
+function deleteExpired(key: string): boolean {
   let deleted = false
-  if (obj.expire <= Date.now()) {
-    delete obj[key]
+  if (cacheStore[key].expire <= Date.now()) {
+    delete cacheStore[key]
     deleted = true
   }
 
