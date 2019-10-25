@@ -9,7 +9,8 @@ interface CacheStore {
   [key: string]: CacheObject
 }
 
-let cacheStore: CacheStore = {}
+let cacheStore = new Map()
+
 let config: CacheConfig = defaultConfig
 
 export function configure(cfg: CacheConfig) {
@@ -18,23 +19,24 @@ export function configure(cfg: CacheConfig) {
 
 export function put(key: string, value: any, duration?: number): void {
   const exp = duration ? duration : config.commonExpiry
-  cacheStore[key] = {
+  cacheStore.set(key, {
     value,
     expire: exp + Date.now()
-  }
+  })
 }
 
 export function get(key: string): any {
-  if (!cacheStore[key] || deleteExpired(key)) {
+  const cacheData = cacheStore.get(key)
+  if (cacheData === undefined || deleteExpired(key)) {
     return ''
   }
   
-  return cacheStore[key].value
+  return cacheData.value
 }
 
 function deleteExpired(key: string): boolean {
   let deleted = false
-  if (cacheStore[key].expire <= Date.now()) {
+  if (cacheStore.get(key).expire <= Date.now()) {
     delete cacheStore[key]
     deleted = true
   }
@@ -47,7 +49,7 @@ export function remove(key: string): void {
 }
 
 export function drop(): void {
-  cacheStore = {}
+  cacheStore = new Map()
 }
 
 export function print(): void {
