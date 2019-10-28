@@ -1,15 +1,16 @@
 {
   "name": "cachemyr",
   "version": "0.1.0",
-  "description": "--TODO--",
+  "description": "In-memory storage for cache data",
   "main": "dist/index.js",
   "scripts": {
-    "test": "mocha --timeout 30000",
+    "test": "mocha --timeout 10000",
     "build": "tsc && gulp minify"
   },
   "author": "Kwang-in(Dennis) Jung",
   "license": "MIT",
   "devDependencies": {
+    "@types/node": "^12.11.7",
     "gulp": "^4.0.2",
     "gulp-terser": "^1.2.0",
     "mocha": "^6.2.1",
