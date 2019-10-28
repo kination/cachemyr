@@ -5,10 +5,6 @@ interface CacheObject {
   expire: number
 }
 
-interface CacheStore {
-  [key: string]: CacheObject
-}
-
 let cacheStore = new Map()
 
 let config: CacheConfig = defaultConfig
@@ -17,12 +13,20 @@ export function configure(cfg: CacheConfig) {
   config = cfg
 }
 
-export function put(key: string, value: any, duration?: number): void {
+export function put(key: string, value: any, duration?: number, overflowCB?: Function): void {
   const exp = duration ? duration : config.commonExpiry
   cacheStore.set(key, {
     value,
     expire: exp + Date.now()
   })
+
+  if (config.monitorHeap) {
+    if (isHeapReachedToMax()) {
+      if (overflowCB) {
+        overflowCB()
+      }
+    }
+  }
 }
 
 export function get(key: string): any {
@@ -34,18 +38,8 @@ export function get(key: string): any {
   return cacheData.value
 }
 
-function deleteExpired(key: string): boolean {
-  let deleted = false
-  if (cacheStore.get(key).expire <= Date.now()) {
-    delete cacheStore[key]
-    deleted = true
-  }
-
-  return deleted
-}
-
 export function remove(key: string): void {
-  delete cacheStore[key];
+  cacheStore.delete(key)
 }
 
 export function drop(): void {
@@ -58,4 +52,25 @@ export function print(): void {
   } else {
     console.log('Unable to print')
   }
+}
+
+function deleteExpired(key: string): boolean {
+  let deleted = false
+  if (cacheStore.get(key).expire <= Date.now()) {
+    cacheStore.delete(key)
+    deleted = true
+  }
+
+  return deleted
+}
+
+function isHeapReachedToMax(): boolean {
+  const ht = process.memoryUsage().heapTotal
+  console.log(ht + ' / ' + config.maxHeap)
+  let isReached = false
+  if (ht >= config.maxHeap) {
+    isReached = true
+  }
+
+  return isReached
 }
