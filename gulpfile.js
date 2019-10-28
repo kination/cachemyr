@@ -1,11 +1,9 @@
 const gulp = require('gulp')
-const uglify = require('gulp-uglify')
-const pipeline = require('readable-stream').pipeline
+const terser = require('gulp-terser')
 
 gulp.task('minify', () => {
-  return pipeline(
-    gulp.src('dist/*.js'),
-    uglify(),
-    gulp.dest('dist')
+  return gulp.src('dist/*.js')
+    .pipe(terser())
+    .pipe(gulp.dest('dist')
   )
 })
