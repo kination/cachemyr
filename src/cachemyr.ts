@@ -66,7 +66,6 @@ function deleteExpired(key: string): boolean {
 
 function isHeapReachedToMax(): boolean {
   const ht = process.memoryUsage().heapTotal
-  console.log(ht + ' / ' + config.maxHeap)
   let isReached = false
   if (ht >= config.maxHeap) {
     isReached = true
