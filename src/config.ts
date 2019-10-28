@@ -9,6 +9,6 @@ export interface CacheConfig {
 export const defaultConfig: CacheConfig = {
   debugMode: false,
   commonExpiry: 6000,
-  monitorHeap: true,
+  monitorHeap: false,
   maxHeap: 1024 * 1024 * 1024
 }
