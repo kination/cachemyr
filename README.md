@@ -5,9 +5,11 @@ __This is pre-alpha state module. Don't use it for production!!__
 
 ## How to...
 ### Install
-// TODO
+#### // TODO:
 
 ### Use 
+#### // TODO:
+
 This is example for user:
 ```javascript
 const mc = require('cachemyr')
@@ -53,8 +55,6 @@ Variable | Type | Description
 --- | --- | ---
 key | string | Key of KV data
 
-
-#### // TODO
 
 ## For developer
 ```
