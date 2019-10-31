@@ -6,6 +6,7 @@ interface CacheObject {
 }
 
 let cacheStore = new Map()
+let kvSize = 0
 
 let config: CacheConfig = defaultConfig
 
@@ -20,8 +21,11 @@ export function put(key: string, value: any, duration?: number, overflowCB?: Fun
     expire: exp + Date.now()
   })
 
-  if (config.monitorHeap) {
+  kvSize += 1
+
+  if (isNeedToCheckHeap()) {
     if (isHeapReachedToMax()) {
+      drop()
       if (overflowCB) {
         overflowCB()
       }
@@ -29,21 +33,22 @@ export function put(key: string, value: any, duration?: number, overflowCB?: Fun
   }
 }
 
-export function get(key: string): any {
+export function get(key: string): any | undefined {
   const cacheData = cacheStore.get(key)
   if (cacheData === undefined || deleteExpired(key)) {
-    return ''
+    return
   }
   
   return cacheData.value
 }
 
 export function remove(key: string): void {
-  cacheStore.delete(key)
+  deleteKV(key)
 }
 
 export function drop(): void {
   cacheStore = new Map()
+  kvSize = 0
 }
 
 export function print(): void {
@@ -57,11 +62,26 @@ export function print(): void {
 function deleteExpired(key: string): boolean {
   let deleted = false
   if (cacheStore.get(key).expire <= Date.now()) {
-    cacheStore.delete(key)
+    deleteKV(key)
     deleted = true
   }
 
   return deleted
+}
+
+function isNeedToCheckHeap(): boolean {
+  let needToCheck = false
+  if (config.monitorHeap && (kvSize % config.ssHeapByLength === 0)) {
+    console.log('KV size:' + kvSize)
+    needToCheck = true
+  }
+
+  return needToCheck
+}
+
+function deleteKV(key: string): void {
+  cacheStore.delete(key)
+  kvSize -= 1
 }
 
 function isHeapReachedToMax(): boolean {
