@@ -40,7 +40,7 @@ duration | number(optional) | Length of duration(ms) to keep this data
 overflowCB | Function(optional) | Function which will be called when heap size(defined by configuration) is overflowed. 
 
 
-#### get: any
+#### get: any | null
 Get value of key from storage. Returns `null` when there is no key.
 
 Variable | Type | Description
@@ -58,8 +58,8 @@ key | string | Key of KV data
 
 ## For developer
 ```
-$ yarn build // for build module
+$ yarn build // build module
 
-$ yarn test // for test module
+$ yarn test // test module
 ```
 
