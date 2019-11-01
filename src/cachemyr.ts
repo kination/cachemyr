@@ -25,7 +25,6 @@ export function put(key: string, value: any, duration?: number, overflowCB?: Fun
 
   if (isNeedToCheckHeap()) {
     if (isHeapReachedToMax()) {
-      drop()
       if (overflowCB) {
         overflowCB()
       }
@@ -33,10 +32,10 @@ export function put(key: string, value: any, duration?: number, overflowCB?: Fun
   }
 }
 
-export function get(key: string): any | undefined {
+export function get(key: string): any | null {
   const cacheData = cacheStore.get(key)
   if (cacheData === undefined || deleteExpired(key)) {
-    return
+    return null
   }
   
   return cacheData.value
@@ -49,6 +48,10 @@ export function remove(key: string): void {
 export function drop(): void {
   cacheStore = new Map()
   kvSize = 0
+}
+
+export function getLength(): number {
+  return kvSize
 }
 
 export function print(): void {

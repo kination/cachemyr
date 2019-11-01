@@ -41,7 +41,7 @@ overflowCB | Function(optional) | Function which will be called when heap size(d
 
 
 #### get: any
-Get value of key from storage
+Get value of key from storage. Returns `null` when there is no key.
 
 Variable | Type | Description
 --- | --- | ---
