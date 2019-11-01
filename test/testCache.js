@@ -1,25 +1,50 @@
 const assert = require('assert')
 const cache = require('../dist/index')
 
-describe('Test module', () => {
+describe('Cachemyr Test', () => {
   
-  it('Test read/write', () => {
-    cache.put('key', 1)
-    assert.equal(cache.get('key'), 1)
+  beforeEach(() => {
+    // clean-up cache before every test
+    cache.drop()
+  })
+
+  it('Test read/write number', () => {
+    cache.put('rw-key', 1)
+    assert.equal(cache.get('rw-key'), 1)
+  })
+
+  it('Test read/write obj', () => {
+    const testObj = {
+      name: 'cachemyr',
+      id: 27
+    }
+
+    cache.put('rw-obj-key', testObj)
+    assert.equal(cache.get('rw-obj-key'), testObj)
+    assert.equal(cache.get('rw-obj-key').name, 'cachemyr')
+    assert.equal(cache.get('rw-obj-key').id, 27)
   })
 
   it('Test remove', () => {
-    cache.put('key', 1)
-    assert.equal(cache.get('key'), 1)
-    cache.remove('key')
-    assert.equal(cache.get('key'), '')
+    cache.put('rm-key', 1)
+    assert.equal(cache.get('rm-key'), 1)
+    cache.remove('rm-key')
+    assert.equal(cache.get('rm-key'), null)
+  })
+
+  it ('Test get length', () => {
+    [1, 2, 3, 4, 5].forEach((val) => {
+      cache.put(`size-key-${val}`, `value-${val}`)
+    })
+
+    assert.equal(cache.getLength(), 5)
   })
 
   it ('Test timeout expiration', (done) => {
     cache.put('key-timeout', 'value-timeout', 3000)
     assert.equal(cache.get('key-timeout'), 'value-timeout')
     setTimeout(() => {
-      assert.equal(cache.get('key-timeout'), '')
+      assert.equal(cache.get('key-timeout'), null)
       done()
     }, 4000)
   })
