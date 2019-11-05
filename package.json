@@ -2,12 +2,24 @@
   "name": "cachemyr",
   "version": "0.2.0",
   "description": "In-memory storage for cache data",
+  "keywords": [
+    "node",
+    "in-memory",
+    "cache",
+    "data",
+    "storage"
+  ],
   "main": "dist/index.js",
   "scripts": {
     "test": "mocha --timeout 10000",
     "build": "tsc && gulp minify"
   },
-  "author": "Kwang-in(Dennis) Jung",
+  "author": "Kwang-in(Dennis) Jung <inylove82@gmail.com>",
+  "homepage": "https://github.com/djKooks/cachemyr",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/djKooks/cachemyr.git"
+  },
   "license": "MIT",
   "devDependencies": {
     "@types/node": "^12.11.7",
