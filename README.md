@@ -1,11 +1,17 @@
 # cachemyr
-In-memory cache storage for node.
+Cachemyr[/kaʃˈmɪə,ˈkaʃmɪə/]] is simple in-memory cache storage module for node.
 
 __This is pre-alpha state module. Don't use it for production!!__
 
-## How to...
+## How to:
 ### Install
-#### // TODO:
+```
+// for 'npm' user
+$ npm i cachemyr
+
+// for 'yarn' user
+$ yarn add cachemyr
+```
 
 ### Use 
 #### // TODO:
@@ -64,7 +70,10 @@ Remove all data in storage
 Return number of key-value set in storage
 
 
-## For developer
+## Contribution
+Improvements, bug report & fix, document updates, and ideas are all welcome.
+
+### Build command:
 ```
 $ yarn build // build module
 
