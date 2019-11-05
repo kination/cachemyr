@@ -27,7 +27,6 @@ mc.put('key-1', 1, 6000, () => {
 
 ```
 
-
 ### API
 #### put: void
 Put key-value data to storage
@@ -37,7 +36,7 @@ Variable | Type | Description
 key | string | Key of KV(key-value) data
 value | any  | Value of KV data
 duration | number(optional) | Length of duration(ms) to keep this data
-overflowCB | Function(optional) | Function which will be called when heap size(defined by configuration) is overflowed. 
+overflowCB | Function(optional) | Callback function when memory usage of storage has overrun the value defined in configuration
 
 
 #### get: any | null
@@ -46,6 +45,7 @@ Get value of key from storage. Returns `null` when there is no key.
 Variable | Type | Description
 --- | --- | ---
 key | string | Key of KV data
+instantRemoval | boolean(optioanl) | Remove after get when set to true
 
 
 #### remove: void
@@ -54,6 +54,14 @@ Remove key-value set from storage
 Variable | Type | Description
 --- | --- | ---
 key | string | Key of KV data
+
+
+#### drop: void
+Remove all data in storage
+
+
+#### getLength: number
+Return number of key-value set in storage
 
 
 ## For developer

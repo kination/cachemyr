@@ -32,6 +32,12 @@ describe('Cachemyr Test', () => {
     assert.equal(cache.get('rm-key'), null)
   })
 
+  it('Test instant removal', () => {
+    cache.put('irm-key', 'will removed')
+    assert.equal(cache.get('irm-key', true), 'will removed')
+    assert.equal(cache.get('irm-key'), null)
+  })
+
   it ('Test get length', () => {
     [1, 2, 3, 4, 5].forEach((val) => {
       cache.put(`size-key-${val}`, `value-${val}`)
