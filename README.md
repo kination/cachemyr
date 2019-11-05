@@ -1,7 +1,7 @@
 # cachemyr
-Cachemyr[/kaʃˈmɪə,ˈkaʃmɪə/]] is simple in-memory cache storage module for node.
+Cachemyr[/kaʃˈmɪə] is simple in-memory cache storage module for node.
 
-__This is pre-alpha state module. Don't use it for production!!__
+__This is alpha state module. Some of APIs can be changed by update.__
 
 ## How to:
 ### Install
