@@ -1,6 +1,6 @@
 {
   "name": "cachemyr",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "In-memory storage for cache data",
   "keywords": [
     "node",
@@ -12,7 +12,8 @@
   "main": "dist/index.js",
   "scripts": {
     "test": "mocha --timeout 10000",
-    "build": "tsc && gulp minify"
+    "build": "tsc && gulp minify",
+    "prepublishOnly": "npm run build && npm run test"
   },
   "author": "Kwang-in(Dennis) Jung <inylove82@gmail.com>",
   "homepage": "https://github.com/djKooks/cachemyr",

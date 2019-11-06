@@ -24,7 +24,7 @@ mc.put('key-1', 1)
 console.log(mc.get('key-1')) // 1
 
 mc.delete('key-1')
-console.log(mc.get('key-1')) // ''
+console.log(mc.get('key-1')) // null
 
 mc.put('key-1', 1, 6000, () => {
     // only being called when nodejs memory is overflowed...default is 1Gb
