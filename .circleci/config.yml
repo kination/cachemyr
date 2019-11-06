@@ -5,20 +5,6 @@ executors:
     docker:
       - image: circleci/node:latest
 
-commands:
-  restore_modules:
-    steps:
-      - restore_cache:
-          keys: 
-            - v1-npm-deps-{{ checksum "package-lock.json" }}
-            - v1-npm-deps-
-  save_modules:
-    steps:
-      - save_cache:
-          key: v1-npm-deps-{{ checksum "package-lock.json" }}
-          paths:
-            - ./node_modules
-
 jobs:
   build:
     executor: default
@@ -26,22 +12,9 @@ jobs:
       - checkout
       - run: npm install
       - run: npm run build
-      - save_modules
-    
-  test:
-    executor: default
-    steps:
-      - checkout
-      - restore_modules
-      - run:
-          name: Test module
-          command: './node_modules/.bin/mocha --timeout 10000'
+      - run: npm run test
 
 workflows:
   main:
     jobs:
-      - build
-      - test:
-          requires:
-            - build
-          
+      - build  
