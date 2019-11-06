@@ -22,11 +22,17 @@ jobs:
     executor: default
     steps:
       - checkout
-      - restore_modules
       - run: npm install
+      - save_modules
+
+  build:
+    executor: default
+    steps:
+      - checkout
+      - restore_modules
       - run: npm run build
       - save_modules
-    
+ 
   test:
     executor: default
     steps:
@@ -41,7 +47,10 @@ workflows:
   main:
     jobs:
       - setup
-      - test:
+      - build:
           requires:
             - setup
+      - test:
+          requires:
+            - build
           
