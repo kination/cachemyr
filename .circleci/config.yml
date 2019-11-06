@@ -3,7 +3,7 @@ version: 2.1
 executors:
   default:
     docker:
-      - image: circleci/node:12
+      - image: circleci/node:latest
 
 commands:
   restore_modules:
@@ -18,21 +18,18 @@ commands:
             - node_modules
 
 jobs:
-  setup:
-    executor: default
-    steps:
-      - checkout
-      - run: npm install
-      - save_modules
-
   build:
     executor: default
     steps:
       - checkout
       - restore_modules
+      - run: npm install
       - run: npm run build
+      - run:
+          name: Test module
+          command: npm run test
       - save_modules
- 
+    
   test:
     executor: default
     steps:
@@ -41,15 +38,11 @@ jobs:
       - run:
           name: Test module
           command: npm run test
-      - save_modules
 
 workflows:
   main:
     jobs:
-      - setup
-      - build:
-          requires:
-            - setup
+      - build
       - test:
           requires:
             - build
