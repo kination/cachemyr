@@ -1,3 +1,5 @@
+[![CircleCI](https://circleci.com/gh/djKooks/cachemyr.svg?style=svg)](https://circleci.com/gh/djKooks/cachemyr)
+
 # cachemyr
 Cachemyr[/kaʃˈmɪə] is simple in-memory cache storage module for node.
 
