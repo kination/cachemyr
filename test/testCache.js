@@ -47,11 +47,24 @@ describe('Cachemyr Test', () => {
   })
 
   it ('Test timeout expiration', (done) => {
-    cache.put('key-timeout', 'value-timeout', 3000)
+    cache.put('key-timeout', 'value-timeout', 2000)
     assert.equal(cache.get('key-timeout'), 'value-timeout')
     setTimeout(() => {
       assert.equal(cache.get('key-timeout'), null)
       done()
-    }, 4000)
+    }, 3000)
+  })
+
+  it('Test timeout callback', (done) => {
+    const TEST_KEY = 'tocb-key'
+    const TEST_VAL = 'check timeout'
+    setTimeout(() => {
+      cache.put(TEST_KEY, TEST_VAL, 1000, (k, v) => {
+        assert.equal(k, TEST_KEY)
+        assert.equal(v, TEST_VAL)
+        assert.equal(cache.get(TEST_KEY), null)
+        done()
+      })
+    }, 2000)
   })
 })

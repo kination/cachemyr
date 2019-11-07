@@ -2,7 +2,8 @@ import { CacheConfig, defaultConfig } from './config'
 
 interface CacheObject {
   value: any,
-  expire: number
+  expire: number,
+  timeoutFunc?: any
 }
 
 let cacheStore = new Map()
@@ -25,16 +26,25 @@ export function configure(cfg: CacheConfig) {
  * @param  {string} key - Key of data
  * @param  {any} value - Value of data
  * @param  {number} duration? - Length of duration(ms) to keep this data
+ * @param  {Function} timeoutCB? - Callback function to be called when added data has been expired
  * @param  {Function} overflowCB? - Callback function when memory usage of storage has 
  *                                  overrun the value defined in configuration
  * @returns void
  */
-export function put(key: string, value: any, duration?: number, overflowCB?: Function): void {
-  const exp = duration ? duration : config.commonExpiry
-  cacheStore.set(key, {
+export function put(key: string, value: any, duration?: number, timeoutCB?: Function, overflowCB?: Function): void {
+  let exp = duration ? duration : config.commonExpiry
+  const valSet: CacheObject = {
     value,
     expire: exp + Date.now()
-  })
+  }
+
+  if (timeoutCB) {
+    valSet.timeoutFunc = setTimeout(() => {
+      timeoutCB(key, value)
+    }, exp)
+  }
+
+  cacheStore.set(key, valSet)
 
   kvSize += 1
 
@@ -45,6 +55,10 @@ export function put(key: string, value: any, duration?: number, overflowCB?: Fun
       }
     }
   }
+}
+
+function timeoutAction(k: string, v:any, timeoutCB: Function) {
+  timeoutCB(k, v)
 }
 
 /**
