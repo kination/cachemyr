@@ -44,6 +44,7 @@ Variable | Type | Description
 key | string | Key of KV(key-value) data
 value | any  | Value of KV data
 duration | number(optional) | Length of duration(ms) to keep this data
+timeoutCB | Function(optional) | Callback function to be called when added data has been expired
 overflowCB | Function(optional) | Callback function when memory usage of storage has overrun the value defined in configuration
 
 
