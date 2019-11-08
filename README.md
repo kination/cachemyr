@@ -28,11 +28,11 @@ console.log(mc.get('key-1')) // 1
 mc.delete('key-1')
 console.log(mc.get('key-1')) // null
 
-mc.put('key-1', 1, 6000, () => {
-    // only being called when nodejs memory is overflowed...default is 1Gb
+mc.put('key-2', 2, 6000, (key, value) => {
+    // called when data with key `key-2` has been expired (after 6 second)
 })
 
-
+console.log(mc.getLength()) // 1 (<'key-2', 2>)
 ```
 
 ### API
