@@ -3,7 +3,39 @@
 # cachemyr
 Cachemyr[/kaʃˈmɪə] is simple in-memory cache storage module for node.
 
-__This is alpha state module. Some of APIs can be changed by update.__
+## Why started?
+I was using [node-cache](https://github.com/ptarjan/node-cache) before. While using, there was some error and we were suspecting memory overflow as one of the reason. Finally, that was not the reason, but I thought it would be good if possible to let user know when heap memory usage is close to allowed memory in node(usually 1.4G).
+Also, there was bit of performance upgrade:
+
+> State:
+>> 1. Write 100,000 key-value to storage
+>> 2. Read 100,000 data from storage with random key
+>> 3. Repeat 100 times
+
+(node-cache)
+```
+====== Memory usage ====== 
+heap total:88.4765625
+heap used:51.40773010253906
+
+======= R/W performance(Avg. of 100 times test) ==========
+Write Avg: 53.61ms
+Read Avg: 52.71ms
+```
+(cachemyr)
+```
+====== Memory usage ====== 
+heap total:75.91796875
+heap used:29.33899688720703
+
+======= R/W performance(Avg. of 100 times test) ==========
+Write Avg: 36.84ms
+Read Avg: 53.12ms
+```
+
+It depends on state, but usually shows bit slower performance on reading, but way more fast on writing.
+
+But yet `node-cache` has been almost 3~4 years and proved by lot of projects, this has only been a few month and needs more test and improvement to become stable. Hope you could help!
 
 ## How to:
 ### Install
@@ -74,7 +106,7 @@ Return number of key-value set in storage
 
 
 ## Contribution
-Improvements, bug report & fix, document updates, and ideas are all welcome.
+Improvements, bug report & fix, document updates, suggestions, and stars are all welcome!
 
 ### Build command:
 ```
